@@ -59,12 +59,6 @@ function BuyForm(props) {
       sessionId: checkoutSession.data.id,
     });
 
-    const webhookPost = await axios.post("/api/webhook", {
-      props: {
-        path: props.path
-      },
-    });
-
     if (result.error) {
       alert(result.error.message);
     } else {
