@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { buffer } from "micro";
-import { db } from "../firebase";
+import { db } from "../../../firebase";
 import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 
 
