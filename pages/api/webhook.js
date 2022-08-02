@@ -29,6 +29,6 @@ export default async function webhookHandler(req, res) {
 
     console.log(event);
 
-    res.status(200).send();
+    res.status(200).send({ id: sig });
   }
 }
