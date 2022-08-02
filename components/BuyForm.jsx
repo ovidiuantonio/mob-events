@@ -60,7 +60,7 @@ function BuyForm(props) {
     });
 
     if (result.error) {
-      alert(result.error.message);
+      console.log(result);
     } else {
       
     }
