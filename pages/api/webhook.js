@@ -21,6 +21,24 @@ export default async function webhookHandler(req, res) {
     try {
       if (!sig || !webhookSecret) return;
 
+      const getTables = async () => {
+        const docs = await getDocs(collection(db, `franka04082022`));
+        const doclist = docs.docs.map((event) => ({
+          ...event.data(),
+          id: event.id,
+        }));
+
+        doclist.map((docitem, index) => {
+          if (docitem.path === eventId) {
+            const tablesRef = doc(db, "upcoming-events", `franka04082022`);
+
+            setDoc(tablesRef, { tables: docitem.tables - 1 }, { merge: true });
+          }
+        });
+      };
+
+      getTables();
+
       event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
     } catch (error) {
       console.log("WH error");
@@ -29,6 +47,6 @@ export default async function webhookHandler(req, res) {
 
     console.log(event);
 
-    res.status(200).send({ id: sig });
+    res.status(200).send({ success: true });
   }
 }
