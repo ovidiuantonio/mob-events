@@ -54,13 +54,15 @@ function BuyForm(props) {
         email: formik.values.email
       },
     });
+    
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
+
     const webhookPost = await axios.post("/api/webhook", {
       props: {
         path: props.path
       },
-    });
-    const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
     });
 
     if (result.error) {
