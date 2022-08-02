@@ -21,8 +21,8 @@ async function CreateStripeSession(req, res) {
     payment_method_types: ['card'],
     line_items: [transformedItem],
     mode: 'payment',
-    success_url: redirectURL + '?status=success',
-    cancel_url: redirectURL + '?status=cancel',
+    success_url: redirectURL + '/success',
+    cancel_url: redirectURL + '/fail',
   });
 
   res.json({ id: session.id });
