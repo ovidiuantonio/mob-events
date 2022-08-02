@@ -1,0 +1,653 @@
+$bg: #1e1e1e;
+$yellow: #feb700;
+$white: #ffffff;
+
+//NAV
+
+.navBar {
+  height: 100vh;
+  width: 30rem;
+  background-color: $yellow;
+  padding-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  left: 0;
+  float: left;
+  position: sticky;
+}
+
+.Logo {
+  max-width: 6.9rem;
+  min-width: 6.9rem;
+  height: auto;
+  margin-bottom: 3rem;
+  fill: $bg;
+
+  transition: all 0.2s ease-in;
+
+  &-link {
+    margin-bottom: 2rem;
+  }
+
+  &:hover {
+    fill: $white;
+  }
+}
+
+.Links {
+  list-style: none;
+  text-align: center;
+  width: 100%;
+}
+
+.listItem {
+  margin-bottom: 1.5rem;
+
+  &-Buy {
+    background-color: $bg;
+    padding: 0.8rem 0;
+  }
+}
+
+.Link {
+  color: $white;
+  text-decoration: none;
+  font-size: 2.4rem;
+  font-weight: 400;
+
+  &:hover {
+    color: $bg;
+  }
+
+  &-Buy {
+    width: 100%;
+    font-weight: 600;
+    color: $yellow;
+
+    &:hover {
+      color: $yellow;
+    }
+  }
+
+  transition: all 0.3s ease-in-out;
+}
+
+.copyright {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $bg;
+  position: absolute;
+  bottom: 1rem;
+}
+
+// EVENTS
+
+.upcomingEvents {
+  width: 80%;
+  margin-bottom: 10rem;
+  padding: 10rem;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  text-align: right;
+}
+
+.categoryTitle {
+  font-size: 11.6rem;
+  color: $white;
+  line-height: 100%;
+  font-style: italic;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 7.5rem;
+
+  &-nomargin {
+    margin-bottom: 0;
+  }
+
+  &-black {
+    color: $bg;
+  }
+
+  &-sub {
+    font-size: 3.2rem;
+    margin-bottom: 7.5rem;
+    color: $yellow;
+
+    &-white {
+      color: $white;
+      font-size: 4rem;
+    }
+  }
+}
+
+.event {
+  &-main {
+    text-align: center;
+  }
+
+  &-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 7.5rem;
+  }
+
+  &-left {
+    margin-right: 3rem;
+    min-height: 100%;
+  }
+
+  &-right {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &-button {
+      margin-top: 1rem;
+    }
+  }
+
+  &-content {
+    margin-right: 1.5rem;
+  }
+
+  &-holder {
+    display: flex;
+    align-items: top;
+    justify-content: right;
+    margin-bottom: 5rem;
+  }
+
+  &-star {
+    margin-top: 0.3rem;
+    width: 2rem;
+    height: 2rem;
+    color: $yellow;
+  }
+
+  &-title {
+    font-size: 2.4rem;
+    color: $white;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 126.5%;
+
+    &-gold {
+      color: $yellow;
+
+      &-small {
+        font-size: 1.6rem;
+        color: $yellow;
+        margin-bottom: 1rem;
+        line-height: 140%;
+        font-weight: 500;
+      }
+    }
+
+    &-black {
+      color: $bg;
+    }
+  }
+
+  &-seemore {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $white;
+    font-style: italic;
+    text-decoration: underline;
+
+    &-black {
+      color: $bg;
+    }
+  }
+
+  &-poster {
+    margin-top: 1rem;
+    width: 50rem;
+    height: auto;
+    outline: 2px solid $yellow;
+  }
+}
+
+.events {
+  margin-bottom: 5rem;
+
+  &-past {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.seeall {
+  &-text {
+    font-size: 3.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-style: italic;
+    background-color: $white;
+    display: inline-block;
+    padding: 0 2rem 0 4rem;
+    margin-bottom: 0.5rem;
+
+    &-sponsor {
+      text-transform: initial;
+      padding: 1rem 2rem 1rem 4rem;
+    }
+  }
+
+  &-link {
+    transition: all 0.2s ease-in;
+    text-decoration: none;
+    color: $bg;
+
+    &:hover {
+      color: $yellow;
+    }
+  }
+}
+
+.buynow {
+  &-text {
+    font-size: 4.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-style: italic;
+    background-color: $yellow;
+    display: inline-block;
+    padding: 0 2rem 0 4rem;
+
+    &-email {
+      text-transform: initial;
+      padding: 1rem 2rem 1rem 4rem;
+      cursor: pointer;
+    }
+  }
+
+  &-link {
+    transition: all 0.2s ease-in;
+    text-decoration: none;
+    color: $white;
+
+    &:hover {
+      color: $bg;
+    }
+
+    &-black {
+      color: $bg;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+}
+
+.cta-holder {
+  display: flex;
+  flex-direction: column;
+}
+
+.pastEvents {
+  background-color: $white;
+  padding: 10rem;
+  padding-bottom: 20rem;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  min-height: auto;
+  flex-direction: column;
+  justify-content: right;
+  text-align: right;
+  width: 100%;
+
+  background-image: url("../public/logo-mob-outline.svg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+//BUY NOW
+
+.home-buynow {
+  &-container {
+    background-color: $yellow;
+    text-align: center;
+    padding: 10rem 0;
+
+    background-image: url("../public/logo-mob-outline.svg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &-title {
+    font-size: 6.4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-style: italic;
+
+    &-link {
+      transition: all 0.2s ease-in;
+      color: $white;
+      text-decoration: none;
+
+      &:hover {
+        color: $bg;
+      }
+    }
+  }
+}
+
+// FOOTER
+
+.footer {
+  background-color: $bg;
+  padding: 10rem;
+  text-align: left;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-grow: 1;
+
+  &-section {
+    min-height: 15rem;
+  }
+
+  &-mob {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &-logo {
+    transition: all 0.2s ease-in;
+    width: 6.9rem;
+    height: auto;
+    fill: $yellow;
+
+    &:hover {
+      fill: $white;
+    }
+
+    &-instagram,
+    &-tiktok {
+      transition: all 0.2s ease-in;
+      width: 2rem;
+      height: 2rem;
+      color: $yellow;
+      margin-right: 1rem;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  &-category-title {
+    font-size: 2.4rem;
+    color: $yellow;
+    font-weight: 600;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: 0;
+    list-style: none;
+  }
+
+  &-link {
+    color: $white;
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-decoration: none;
+    margin-bottom: 0.3rem;
+
+    :nth-last-of-type(1) {
+      margin-bottom: 0;
+    }
+
+    transition: all 0.2s ease-in;
+
+    &:hover {
+      color: $yellow;
+    }
+  }
+
+  &-email {
+    cursor: pointer;
+  }
+}
+
+// SPONSORSHIPS
+
+.sponsorships {
+  width: 80%;
+  margin-bottom: 10rem;
+  padding: 10rem;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  text-align: right;
+}
+
+.chapter {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  margin-bottom: 1.5rem;
+
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 1.5rem;
+  }
+
+  &-btn {
+    border: none;
+    background-color: transparent;
+
+    & svg {
+      width: 2rem;
+      height: 2rem;
+      color: $white;
+      margin-right: 2.5rem;
+      cursor: pointer;
+
+      transition: all 1s ease;
+    }
+  }
+
+  &-title {
+    font-size: 4.8rem;
+    font-weight: 700;
+    font-style: italic;
+    color: $yellow;
+  }
+
+  &-text {
+    font-size: 2rem;
+    font-weight: 600;
+    font-style: italic;
+    color: $white;
+  }
+
+  &-bottom {
+    max-height: 0rem;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+
+    &-open {
+      height: auto;
+      max-height: 100rem;
+      transition: max-height 0.4s ease;
+    }
+  }
+}
+
+.arrow-down {
+  transform: rotate(0deg);
+}
+
+.arrow-up {
+  transform: rotate(180deg);
+}
+
+.chapters {
+  margin-bottom: 4rem;
+}
+
+// EVENT
+
+.eventPage {
+  margin-bottom: 10rem;
+  padding: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  text-align: left;
+}
+
+//Button
+
+.button {
+  display: inline-block;
+  padding: 2rem 4rem;
+  font-size: 2.8rem;
+  color: $white;
+  background-color: $yellow;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+//Form
+
+.form {
+  margin: auto;
+  margin-top: 5rem;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+
+  &-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+  }
+
+  &-error {
+    color: $yellow;
+    font-size: 1.5rem;
+    margin-top: -0.5rem;
+    text-align: left;
+  }
+
+  &-numeprenume {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  &-nume,
+  &-prenume {
+    width: 98%;
+  }
+
+  &-nume {
+    width: 100%;
+  }
+
+  &-nume,
+  &-prenume,
+  &-email,
+  &-tel {
+    display: inline-block;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    outline: 2px solid $yellow;
+    padding: 2rem;
+    background-color: $bg;
+    color: $white;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: $yellow;
+      font-size: 1.4rem;
+    }
+
+    &:focus {
+      outline: 2px solid $white;
+
+      &::placeholder {
+        color: $white;
+      }
+    }
+  }
+
+  &-submit {
+    border: none;
+    font-family: "Poppins", sans-serif;
+    outline: 2px solid $yellow;
+    background-color: $yellow;
+    padding: 2rem;
+    font-size: 2rem;
+    color: $white;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $white;
+      color: $yellow;
+    }
+  }
+}
+
+.slider {
+  outline: 2px solid $yellow;
+
+  &-photo {
+    height: 80rem;
+    width: auto;
+  }
+
+  &-slide {
+    outline: 2px solid $yellow;
+  }
+}
+
+.splide__arrow--next,
+.splide__arrow--prev {
+  background: $yellow !important;
+
+  & svg {
+    fill: $white !important;
+  }
+}
