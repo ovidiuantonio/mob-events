@@ -56,10 +56,10 @@ const Event = () => {
       {events.map((ev, i) => {
         if (ev.path === eventId) {
           let location = ev.location, city = ev.city, poster = ev.poster, artist = ev.artist, featartist = ev.featartist, date = ev.date, time = ev.time, desc = ev.desc;
-          let name = ev.location, price = 100, description = ev.desc;
+          let name = ev.location, price = 100, description = ev.desc, path = ev.path;
           let buyComp;
           let buy = () => {
-            if (eventType === "upcoming-events") buyComp = <BuyForm name={name} price={price} description={description} />;
+            if (eventType === "upcoming-events") buyComp = <BuyForm name={name} price={price} description={description} path={path} />;
             else buyComp = <></>;
           };
           buy();

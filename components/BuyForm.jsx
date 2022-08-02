@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
+
 
 function BuyForm(props) {
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ function BuyForm(props) {
         .required("Required"),
     }),
     onSubmit: (values) => {
-      createCheckOutSession()
+      createCheckOutSession();
     },
   });
 
@@ -42,89 +43,97 @@ function BuyForm(props) {
     stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   }
 
-const createCheckOutSession = async () => {
-  setLoading(true);
-  const stripe = await stripePromise;
-  const checkoutSession = await axios.post('/api/create-stripe-session', {
-    item: {
-      name : props.name,
-      price: props.price,
-      description: props.description
-    },
-  });
-  const result = await stripe.redirectToCheckout({
-    sessionId: checkoutSession.data.id,
-  });
-  if (result.error) {
-    alert(result.error.message);
-  }
-  setLoading(false);
-};
+  const createCheckOutSession = async () => {
+    setLoading(true);
+    const stripe = await stripePromise;
+    const checkoutSession = await axios.post("/api/create-stripe-session", {
+      item: {
+        name: props.name,
+        price: props.price,
+        description: props.description,
+        email: formik.values.email
+      },
+    });
+    const webhookPost = await axios.post("/api/webhook", {
+      props: {
+        path: props.path
+      },
+    });
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
 
+    if (result.error) {
+      alert(result.error.message);
+    } else {
+      
+    }
+    setLoading(false);
+  };
 
   return (
     <div>
-      <form className='form' onSubmit={formik.handleSubmit}>
-        <div className='form-numeprenume'>
-          <div className='form-flex'>
+      <form className="form" onSubmit={formik.handleSubmit}>
+        <div className="form-numeprenume">
+          <div className="form-flex">
             <input
-              name='firstName'
-              type='text'
-              className='form-prenume'
-              id='firstName'
-              placeholder='First Name'
+              name="firstName"
+              type="text"
+              className="form-prenume"
+              id="firstName"
+              placeholder="First Name"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.firstName}
             />
             {formik.touched.firstName && formik.errors.firstName ? (
-              <p className='form-error'>{formik.errors.firstName}</p>
+              <p className="form-error">{formik.errors.firstName}</p>
             ) : null}
           </div>
-          <div className='form-flex'>
+          <div className="form-flex">
             <input
-              name='lastName'
-              type='text'
-              className='form-nume'
-              id='lastName'
-              placeholder='Last Name'
+              name="lastName"
+              type="text"
+              className="form-nume"
+              id="lastName"
+              placeholder="Last Name"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.lastName}
             />
             {formik.touched.lastName && formik.errors.lastName ? (
-              <p className='form-error'>{formik.errors.lastName}</p>
+              <p className="form-error">{formik.errors.lastName}</p>
             ) : null}
           </div>
         </div>
         <input
-          name='email'
-          type='email'
-          className='form-email'
-          id='email'
-          placeholder='Email'
+          name="email"
+          type="email"
+          className="form-email"
+          id="email"
+          placeholder="Email"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           value={formik.values.email}
         />
         {formik.touched.email && formik.errors.email ? (
-          <p className='form-error'>{formik.errors.email}</p>
+          <p className="form-error">{formik.errors.email}</p>
         ) : null}
         <input
-          name='tel'
-          type='tel'
-          className='form-tel'
-          id='tel'
-          placeholder='Phone Number'
+          name="tel"
+          type="tel"
+          className="form-tel"
+          id="tel"
+          placeholder="Phone Number"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           value={formik.values.tel}
         />
         {formik.touched.tel && formik.errors.tel ? (
-          <p className='form-error'>{formik.errors.tel}</p>
+          <p className="form-error">{formik.errors.tel}</p>
         ) : null}
-        <button type='submit' className='form-submit' id='submit'>
-        {loading ? 'Processing...' : 'Reserve'}
+        <button type="submit" className="form-submit" id="submit">
+          {loading ? "Processing..." : "Reserve"}
         </button>
       </form>
     </div>

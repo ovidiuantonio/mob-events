@@ -12,7 +12,7 @@ function Success() {
   );
 
   return (
-    <div>
+    <div className="sponsorships">
         <h1 className='categoryTitle'>Payment Success</h1>
     </div>
   )
