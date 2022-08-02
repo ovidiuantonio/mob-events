@@ -40,13 +40,11 @@ export default async function webhookHandler(req, res) {
       getTables();
 
       event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
+
+      res.status(200).json({ buf: buf, sig: sig });
     } catch (error) {
       console.log("WH error");
       return res.status(400).send("WH error");
     }
-
-    console.log(event);
-
-    res.status(200).send({ buf: buf, sig: sig });
   }
 }
