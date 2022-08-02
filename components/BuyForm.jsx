@@ -36,9 +36,11 @@ function BuyForm(props) {
     },
   });
 
-  const publishableKey = "process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY";
-  const stripePromise = loadStripe(publishableKey);
+  let stripePromise = null;
 
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+  }
 
 const createCheckOutSession = async () => {
   setLoading(true);

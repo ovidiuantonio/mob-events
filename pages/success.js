@@ -8,7 +8,7 @@ function Success() {
   } = useRouter();
 
   const {data, error} = useSWR(
-    () => `/api/checkout_sessions/${session_id}`,
+    () => `/api/create-stripe-session/${session_id}`,
   );
 
   return (

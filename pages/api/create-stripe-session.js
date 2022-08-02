@@ -3,7 +3,7 @@ const stripe = require('stripe')(process.env.PRIVATE_STRIPE_KEY);
 async function CreateStripeSession(req, res) {
   const { item } = req.body;
 
-  const redirectURL = 'https://mob-events-dqavypyh5-ovidiuantonio.vercel.app'
+  const redirectURL = 'https://mob-events-1vshywbeo-ovidiuantonio.vercel.app'
 
   const transformedItem = {
     price_data: {
