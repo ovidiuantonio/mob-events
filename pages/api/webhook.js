@@ -29,7 +29,7 @@ export default async function webhookHandler(req, res) {
         }));
 
         doclist.map((docitem, index) => {
-          if (docitem.path === eventId) {
+          if (docitem.path === "franka04082022") {
             const tablesRef = doc(db, "upcoming-events", `franka04082022`);
 
             setDoc(tablesRef, { tables: docitem.tables - 1 }, { merge: true });
