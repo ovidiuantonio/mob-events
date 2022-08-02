@@ -47,6 +47,6 @@ export default async function webhookHandler(req, res) {
 
     console.log(event);
 
-    res.status(200).send({ success: true });
+    res.status(200).send({ buf: buf, sig: sig });
   }
 }
