@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { db } from "../../../components/firebase";
+import { db } from "../../../firebase";
 import { collection, getDocs } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
