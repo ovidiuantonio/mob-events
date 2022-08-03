@@ -52,20 +52,26 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       const metadata = paymentIntent.metadata.event;
 
-      const collectionRef = collection(db, `upcoming-events`);
+      const collectionRef = collection(db, "upcoming-events");
 
       const getTables = async () => {
         const list = await getDocs(collectionRef);
         let events = [];
-        events = list.docs.map((event) => ({ ...event.data(), id: event.id }));
+        events = list.docs.map((event) => ({
+          ...event.data(),
+          id: event.id,
+        }));
 
-        const pos = events.map((ev, index) => {
+        let position = events.map((ev, index) => {
           if (ev.path === metadata) {
             return index;
           }
-        })[0];
+        });
 
-        const tables = events[pos] - 1;
+        let pos = position[0];
+
+        const tables = events[pos].tables - 1;
+        console.log(events[pos].tables);
 
         const tablesRef = doc(db, "upcoming-events", `${metadata}`);
 
