@@ -43,11 +43,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("success", event.id);
 
     if (event.type === "payment_intent.succeeded") {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
-    } else if (event.type === "payment_intent.payment_failed") {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      console.log(paymentIntent.last_payment_error?.message);
-    } else if (event.type === "charge.succeeded") {
+      // const paymentIntent = event.data.object as Stripe.PaymentIntent;
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       const eventId = paymentIntent.metadata.event;
       const email = paymentIntent.metadata.customer_email;
@@ -60,6 +56,10 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         email: email,
         tel: tel,
       });
+    } else if (event.type === "payment_intent.payment_failed") {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      console.log(paymentIntent.last_payment_error?.message);
+    } else if (event.type === "charge.succeeded") {
       const charge = event.data.object as Stripe.Charge;
       console.log(charge.id);
     } else {
