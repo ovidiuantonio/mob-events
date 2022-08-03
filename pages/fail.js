@@ -16,7 +16,6 @@ function Fail() {
   return (
     <div className="sponsorships">
       <h1 className="categoryTitle">Payment Fail</h1>
-      <p>{data ? JSON.stringify(data, null, 2) : "Loading"}</p>
     </div>
   );
 }

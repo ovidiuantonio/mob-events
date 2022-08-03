@@ -2,10 +2,24 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loadStripe } from "@stripe/stripe-js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "../firebase";
+import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 
 function BuyForm(props) {
   const [loading, setLoading] = useState(false);
+  const [tables, setTables] = useState([]);
+  const tablesCollectionRef = collection(db, `tables-${props.eventId}`);
+
+  useEffect(() => {
+    const getTables = async () => {
+      const list = await getDocs(tablesCollectionRef);
+      setTables(list.docs.map((event) => ({ ...event.data(), id: event.id })));
+    };
+
+    getTables();
+  }, [])
+  
 
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -44,7 +58,7 @@ function BuyForm(props) {
 
   const createCheckOutSession = async () => {
     setLoading(true);
-    if (props.tables) {
+    if (props.spots - tables.length) {
       const stripe = await stripePromise;
       const checkoutSession = await axios.post("/api/checkout/session", {
         item: {
@@ -139,7 +153,7 @@ function BuyForm(props) {
           {loading ? "Processing..." : "Reserve"}
         </button>
         <p className="form-error form-error-tables">
-          Tables available: {props.tables}
+          Tables available: {props.spots - tables.length}
         </p>
       </form>
     </div>
