@@ -4,13 +4,11 @@ import { db } from "../../../firebase";
 import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
-import updateWindow from "../../../updateWindow";
 
 const Event = () => {
   const router = useRouter();
   const eventId = router.query.id;
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
-  updateWindow(eventId);
 
   const [events, setEvents] = useState([]);
   const eventsCollectionRef = collection(db, `${eventType}`);

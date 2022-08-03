@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { buffer } from "micro";
 import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import { db } from "../../../firebase";
-import updateWindow from "../../../updateWindow"
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.PRIVATE_STRIPE_KEY!, {
@@ -38,11 +37,33 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         console.log("success", event.id)
-        var metadata;
 
         if(event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object as Stripe.PaymentIntent
-            metadata = paymentIntent.metadata.event;
+            const metadata = paymentIntent.metadata.event;
+
+            const collectionRef = collection(db, `upcoming-events`);
+
+            const getTables = async () => {
+                const list = await getDocs(collectionRef);
+                let events = []
+                events = list.docs.map((event) => ({ ...event.data(), id: event.id }));
+
+                const pos = events.map((ev, index) => {
+                    if(ev.path === metadata) {
+                        return index
+                    }
+                })[0];
+
+                const tables = events[pos] - 1;
+
+                const tablesRef = doc(db, 'upcoming-events', `${metadata}`);
+
+                setDoc(tablesRef, { tables: tables }, { merge: true });
+
+              };
+          
+              getTables();
         } else if(event.type === 'payment_intent.payment_failed') {
             const paymentIntent = event.data.object as Stripe.PaymentIntent
             console.log(paymentIntent.last_payment_error?.message)
@@ -53,7 +74,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             console.log(event.type)
         }
 
-        res.json({received: true, event: metadata})
+        res.json({received: true, event: event.data.object})
     } else {
         res.setHeader('Allow', 'POST')
         res.status(405).end('Method not allowed')
