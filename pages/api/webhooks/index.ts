@@ -52,7 +52,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             console.log(event.type)
         }
 
-        res.json({received: true, event: event.data.object})
+        res.json({received: true, event: event.data.object.metadata.event})
     } else {
         res.setHeader('Allow', 'POST')
         res.status(405).end('Method not allowed')
