@@ -9,13 +9,17 @@ function Success() {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  const swr = useSWR(`/api/webhook?session_id=${session_id}`, fetcher);
+  const { data, error } = useSWR(
+    session_id ? `/api/checkout/${session_id}` : null,
+    (url) => fetch(url).then((res) => res.json())
+  );
 
-  console.log(swr);
+  console.log(JSON.stringify(data, null, 2));
 
   return (
     <div className="sponsorships">
       <h1 className="categoryTitle">Payment Success</h1>
+      <p>{data ? JSON.stringify(data, null, 2) : "Loading"}</p>
     </div>
   );
 }

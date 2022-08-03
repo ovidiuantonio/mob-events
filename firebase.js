@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: `${process.env.NEXT_FIREBASE_API_KEY}`,
+  apiKey: `${process.env.FIREBASE_API_KEY}`,
   authDomain: "mob-events.firebaseapp.com",
   databaseURL:
     "https://mob-events-default-rtdb.europe-west1.firebasedatabase.app",

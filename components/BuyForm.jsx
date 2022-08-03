@@ -46,7 +46,7 @@ function BuyForm(props) {
   const createCheckOutSession = async () => {
     setLoading(true);
     const stripe = await stripePromise;
-    const checkoutSession = await axios.post("/api/create-stripe-session", {
+    const checkoutSession = await axios.post("/api/checkout/session", {
       item: {
         name: props.name,
         price: props.price,

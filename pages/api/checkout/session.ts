@@ -1,9 +1,14 @@
-const stripe = require("stripe")(process.env.PRIVATE_STRIPE_KEY);
+import { NextApiRequest, NextApiResponse } from "next";
+import Stripe from "stripe";
 
-async function CreateStripeSession(req, res) {
+const stripe = new Stripe(process.env.PRIVATE_STRIPE_KEY, {
+  apiVersion: "2020-08-27",
+});
+
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { item } = req.body;
 
-  const redirectURL = "https://mob-events.vercel.app/";
+  const redirectURL = "http://localhost:3000";
 
   const transformedItem = {
     price_data: {
@@ -23,10 +28,8 @@ async function CreateStripeSession(req, res) {
     customer_email: item.email,
     mode: "payment",
     success_url: redirectURL + "/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: redirectURL + "/fail",
+    cancel_url: redirectURL + "/fail?session_id={CHECKOUT_SESSION_ID}",
   });
 
-  res.json({ id: session.id });
+  res.status(200).json({ id: session.id });
 }
-
-export default CreateStripeSession;
