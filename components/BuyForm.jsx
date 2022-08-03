@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 
-
 function BuyForm(props) {
   const [loading, setLoading] = useState(false);
 
@@ -45,29 +44,32 @@ function BuyForm(props) {
 
   const createCheckOutSession = async () => {
     setLoading(true);
-    const stripe = await stripePromise;
-    const checkoutSession = await axios.post("/api/checkout/session", {
-      item: {
-        name: props.name,
-        price: props.price,
-        description: props.description,
-        metadata: {
-          event: props.path,
-          customer_name: `${formik.values.firstName} - ${formik.values.lastName}`,
-          customer_email: formik.values.email,
-          customer_tel: formik.values.tel,
-        }
-      },
-    });
-    
-    const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
-    });
+    if (props.tables) {
+      const stripe = await stripePromise;
+      const checkoutSession = await axios.post("/api/checkout/session", {
+        item: {
+          name: props.name,
+          price: props.price,
+          description: props.description,
+          metadata: {
+            event: props.path,
+            customer_name: `${formik.values.firstName} - ${formik.values.lastName}`,
+            customer_email: formik.values.email,
+            customer_tel: formik.values.tel,
+          },
+        },
+      });
 
-    if (result.error) {
-      console.log(result);
+      const result = await stripe.redirectToCheckout({
+        sessionId: checkoutSession.data.id,
+      });
+
+      if (result.error) {
+        console.log(result);
+      } else {
+      }
     } else {
-      
+      alert("There are no more tables left");
     }
     setLoading(false);
   };
@@ -136,7 +138,9 @@ function BuyForm(props) {
         <button type="submit" className="form-submit" id="submit">
           {loading ? "Processing..." : "Reserve"}
         </button>
-        <p className="form-error">Tables available: {props.tables}</p>
+        <p className="form-error form-error-tables">
+          Tables available: {props.tables}
+        </p>
       </form>
     </div>
   );
