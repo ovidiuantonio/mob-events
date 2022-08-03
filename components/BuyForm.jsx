@@ -136,7 +136,7 @@ function BuyForm(props) {
         <button type="submit" className="form-submit" id="submit">
           {loading ? "Processing..." : "Reserve"}
         </button>
-        <p className="form-error">Tables available: {props.spots}</p>
+        <p className="form-error">Tables available: {props.tables}</p>
       </form>
     </div>
   );

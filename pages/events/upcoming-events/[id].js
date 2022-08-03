@@ -20,29 +20,20 @@ const Event = () => {
     const getEvents = async () => {
       const list = await getDocs(eventsCollectionRef);
       setEvents(list.docs.map((event) => ({ ...event.data(), id: event.id })));
-    };
 
-    getEvents();
+      const listt = await getDocs(tablesCollectionRef);
+      setTables(listt.docs.length - 1);
 
-    const getTables = async () => {
-      const list = await getDocs(tablesCollectionRef);
-      setTables(list.docs.length - 1);
-
-      const list2 = list.docs.map((event) => ({
+      const list2 = listt.docs.map((event) => ({
         ...event.data(),
         id: event.id,
       }));
 
-      const numberOfSpots = list2.map((item) => {
-        if (item.id === "number") {
-          return item.number;
-        }
-      });
-
-      setSpots(numberOfSpots[0]);
+      const [first] = list2;
+      setSpots(first.number);
     };
 
-    getTables();
+    getEvents();
 
     function includeJs(jsFilePath) {
       var js = document.createElement("script");
@@ -74,6 +65,8 @@ const Event = () => {
       );
   }, []);
 
+  console.log(spots, tables);
+
   return (
     <div className="eventPage">
       {events.map((ev, i) => {
@@ -100,7 +93,7 @@ const Event = () => {
                   description={description}
                   path={path}
                   index={i}
-                  spots={spots - tables}
+                  tables={spots - tables}
                 />
               );
             else buyComp = <></>;
