@@ -28,8 +28,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     cancel_url: `${req.headers.origin}/fail?session_id={CHECKOUT_SESSION_ID}`,
     metadata: {
       event: `${item.metadata.event}`,
-      customer_name: `${item.customer_name}`,
-      customer_email: `${item.customer_email}`,
+      customer_name: `${item.metadata.customer_name}`,
+      customer_email: `${item.metadata.customer_email}`,
     },
   });
 
