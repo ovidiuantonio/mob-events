@@ -42,19 +42,21 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     console.log("success", event.id);
 
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+    const eventId = paymentIntent.metadata.event;
+    const email = paymentIntent.metadata.customer_email;
+    const name = paymentIntent.metadata.customer_name;
+    const tel = paymentIntent.metadata.customer_tel;
+    const id = paymentIntent.id;
+
+    await setDoc(doc(db, `tables-${eventId}`, `${id}`), {
+      name: name,
+      email: email,
+      tel: tel,
+    });
+
     if (event.type === "payment_intent.succeeded") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      const eventId = paymentIntent.metadata.event;
-      const email = paymentIntent.metadata.customer_email;
-      const name = paymentIntent.metadata.customer_name;
-      const tel = paymentIntent.metadata.customer_tel;
-      const id = paymentIntent.id;
-
-      await setDoc(doc(db, `tables-${eventId}`, `${id}`), {
-        name: name,
-        email: email,
-        tel: tel,
-      });
     } else if (event.type === "payment_intent.payment_failed") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log(paymentIntent.last_payment_error?.message);
