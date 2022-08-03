@@ -51,8 +51,11 @@ function BuyForm(props) {
         name: props.name,
         price: props.price,
         description: props.description,
-        email: formik.values.email,
-        metadata: props.path
+        metadata: {
+          event: props.path,
+          customer_name: formik.values.firstName,
+          customer_email: formik.values.email,
+        }
       },
     });
     
