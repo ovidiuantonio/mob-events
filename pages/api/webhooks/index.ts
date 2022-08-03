@@ -38,10 +38,11 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         console.log("success", event.id)
+        var metadata;
 
         if(event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object as Stripe.PaymentIntent
-            console.log(paymentIntent.status)
+            metadata = paymentIntent.metadata.event;
         } else if(event.type === 'payment_intent.payment_failed') {
             const paymentIntent = event.data.object as Stripe.PaymentIntent
             console.log(paymentIntent.last_payment_error?.message)
@@ -52,7 +53,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             console.log(event.type)
         }
 
-        res.json({received: true, event: event.data})
+        res.json({received: true, event: metadata})
     } else {
         res.setHeader('Allow', 'POST')
         res.status(405).end('Method not allowed')
