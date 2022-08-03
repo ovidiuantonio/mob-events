@@ -44,36 +44,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (event.type === "payment_intent.succeeded") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      //   const collectionRef = collection(db, "upcoming-events");
-      //   const getTables = async () => {
-      //     const list = await getDocs(collectionRef);
-      //     let events = [];
-      //     events = list.docs.map((event) => ({
-      //       ...event.data(),
-      //       id: event.id,
-      //     }));
-      //     let position = events.map((ev, index) => {
-      //       if (ev.path === metadata) {
-      //         return index;
-      //       }
-      //     });
-      //     let pos = position[0];
-      //     const tables = events[pos].tables - 1;
-      //     console.log(events[pos].tables);
-      //     const tablesRef = doc(db, "upcoming-events", `${metadata}`);
-      //     const tablesData = {
-      //       tables: tables,
-      //     };
-      //     updateDoc(tablesRef, tablesData)
-      //       .then((tablesRef) => {
-      //         console.log("Value of an Existing Document Field has been updated");
-      //       })
-      //       .catch((error) => {
-      //         console.log(error);
-      //       });
-      //   };
-      //   getTables();
-      console.log("ok");
+      console.log(paymentIntent);
     } else if (event.type === "payment_intent.payment_failed") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log(paymentIntent.last_payment_error?.message);
@@ -97,7 +68,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       tel: tel,
     });
 
-    res.json({ received: true, event: event.data.object });
+    res.status(200).json({ received: true, event: event.data.object });
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method not allowed");
