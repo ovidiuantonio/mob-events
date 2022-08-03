@@ -1,6 +1,8 @@
 import Cors from "micro-cors";
 import { NextApiRequest, NextApiResponse } from "next";
 import { buffer } from "micro";
+import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
+import { db } from "../../../firebase";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.PRIVATE_STRIPE_KEY!, {
