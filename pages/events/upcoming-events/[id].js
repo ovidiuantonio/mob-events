@@ -4,6 +4,7 @@ import { db } from "../../../firebase";
 import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
+import React from "react";
 
 const Event = () => {
   const router = useRouter();
@@ -11,8 +12,7 @@ const Event = () => {
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
 
   const [events, setEvents] = useState([]);
-  const [tables, setTables] = useState();
-  const [spots, setSpots] = useState();
+  const [tables, setTables] = useState([]);
   const eventsCollectionRef = collection(db, `${eventType}`);
   const tablesCollectionRef = collection(db, `tables-${eventId}`);
 
@@ -21,19 +21,15 @@ const Event = () => {
       const list = await getDocs(eventsCollectionRef);
       setEvents(list.docs.map((event) => ({ ...event.data(), id: event.id })));
 
-      const listt = await getDocs(tablesCollectionRef);
-      setTables(listt.docs.length - 1);
-
-      const list2 = listt.docs.map((event) => ({
-        ...event.data(),
-        id: event.id,
-      }));
-
-      const [first] = list2;
-      setSpots(first.number);
+      getTables();
     };
 
     getEvents();
+
+    const getTables = async () => {
+      const list = await getDocs(tablesCollectionRef);
+      setTables(list.docs.map((event) => ({ ...event.data(), id: event.id })));
+    };
 
     function includeJs(jsFilePath) {
       var js = document.createElement("script");
@@ -65,12 +61,12 @@ const Event = () => {
       );
   }, []);
 
-  console.log(spots, tables);
-
   return (
     <div className="eventPage">
       {events.map((ev, i) => {
         if (ev.path === eventId) {
+          let nrofTables = tables.length;
+          let nrofSpots = ev.spots;
           let location = ev.location,
             city = ev.city,
             poster = ev.poster,
@@ -93,7 +89,7 @@ const Event = () => {
                   description={description}
                   path={path}
                   index={i}
-                  tables={spots - tables}
+                  tables={nrofSpots - nrofTables}
                 />
               );
             else buyComp = <></>;
