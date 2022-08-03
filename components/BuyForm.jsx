@@ -52,9 +52,7 @@ function BuyForm(props) {
         price: props.price,
         description: props.description,
         email: formik.values.email,
-        metadata: {
-          itemId: props.path
-        }
+        itemId: props.path,
       },
     });
     
