@@ -27,6 +27,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     mode: "payment",
     success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${req.headers.origin}/fail?session_id={CHECKOUT_SESSION_ID}`,
+    metadata: {'event': `${item.metadata}`}
   });
 
   res.status(200).json({ id: session.id });

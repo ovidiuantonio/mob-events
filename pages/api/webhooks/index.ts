@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { buffer } from "micro";
 import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import { db } from "../../../firebase";
+import updateWindow from "../../../updateWindow"
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.PRIVATE_STRIPE_KEY!, {
@@ -51,7 +52,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             console.log(event.type)
         }
 
-        res.json({received: true})
+        res.json({received: true, event: event.data.object})
     } else {
         res.setHeader('Allow', 'POST')
         res.status(405).end('Method not allowed')
