@@ -1,84 +1,103 @@
 import Cors from "micro-cors";
 import { NextApiRequest, NextApiResponse } from "next";
 import { buffer } from "micro";
-import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  updateDoc,
+} from "@firebase/firestore";
 import { db } from "../../../firebase";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.PRIVATE_STRIPE_KEY!, {
-    apiVersion: '2020-08-27'
-})
+  apiVersion: "2020-08-27",
+});
 
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export const config = {
-    api: {
-        bodyParser: false,
-    }
-}
+  api: {
+    bodyParser: false,
+  },
+};
 
 const cors = Cors({
-    allowMethods: ['POST', 'HEAD']
-})
+  allowMethods: ["POST", "HEAD"],
+});
 
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if(req.method === 'POST') {
-        const buf = await buffer(req)
-        const sig = req.headers['stripe-signature']!
+  if (req.method === "POST") {
+    const buf = await buffer(req);
+    const sig = req.headers["stripe-signature"]!;
 
-        let event: Stripe.Event
+    let event: Stripe.Event;
 
-        try {
-            event = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret)
-        } catch (error) {
-            console.log(error.message)
-            res.status(400).send(error.message)
-            return;
-        }
-
-        console.log("success", event.id)
-
-        if(event.type === 'payment_intent.succeeded') {
-            const paymentIntent = event.data.object as Stripe.PaymentIntent
-            const metadata = paymentIntent.metadata.event;
-
-            const collectionRef = collection(db, `upcoming-events`);
-
-            const getTables = async () => {
-                const list = await getDocs(collectionRef);
-                let events = []
-                events = list.docs.map((event) => ({ ...event.data(), id: event.id }));
-
-                const pos = events.map((ev, index) => {
-                    if(ev.path === metadata) {
-                        return index
-                    }
-                })[0];
-
-                const tables = events[pos] - 1;
-
-                const tablesRef = doc(db, 'upcoming-events', `${metadata}`);
-
-                setDoc(tablesRef, { tables: tables }, { merge: true });
-
-              };
-          
-              getTables();
-        } else if(event.type === 'payment_intent.payment_failed') {
-            const paymentIntent = event.data.object as Stripe.PaymentIntent
-            console.log(paymentIntent.last_payment_error?.message)
-        } else if(event.type === 'charge.succeeded') {
-            const charge = event.data.object as Stripe.Charge
-            console.log(charge.id)
-        } else {
-            console.log(event.type)
-        }
-
-        res.json({received: true, event: event.data.object})
-    } else {
-        res.setHeader('Allow', 'POST')
-        res.status(405).end('Method not allowed')
+    try {
+      event = stripe.webhooks.constructEvent(
+        buf.toString(),
+        sig,
+        webhookSecret
+      );
+    } catch (error) {
+      console.log(error.message);
+      res.status(400).send(error.message);
+      return;
     }
-}
 
-export default cors(webhookHandler as any)
+    console.log("success", event.id);
+
+    if (event.type === "payment_intent.succeeded") {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      const metadata = paymentIntent.metadata.event;
+
+      const collectionRef = collection(db, `upcoming-events`);
+
+      const getTables = async () => {
+        const list = await getDocs(collectionRef);
+        let events = [];
+        events = list.docs.map((event) => ({ ...event.data(), id: event.id }));
+
+        const pos = events.map((ev, index) => {
+          if (ev.path === metadata) {
+            return index;
+          }
+        })[0];
+
+        const tables = events[pos] - 1;
+
+        const tablesRef = doc(db, "upcoming-events", `${metadata}`);
+
+        const tablesData = {
+          tables: tables,
+        };
+
+        updateDoc(tablesRef, tablesData)
+          .then((tablesRef) => {
+            console.log("Value of an Existing Document Field has been updated");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
+      getTables();
+    } else if (event.type === "payment_intent.payment_failed") {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+      console.log(paymentIntent.last_payment_error?.message);
+    } else if (event.type === "charge.succeeded") {
+      const charge = event.data.object as Stripe.Charge;
+      console.log(charge.id);
+    } else {
+      console.log(event.type);
+    }
+
+    res.json({ received: true, event: event.data.object });
+  } else {
+    res.setHeader("Allow", "POST");
+    res.status(405).end("Method not allowed");
+  }
+};
+
+export default cors(webhookHandler as any);
