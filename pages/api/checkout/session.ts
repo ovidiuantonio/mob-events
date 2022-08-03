@@ -17,7 +17,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       unit_amount: item.price * 100,
     },
     description: item.description,
-    metadata: {"id": `${item.itemId}`},
     quantity: 1,
   };
 

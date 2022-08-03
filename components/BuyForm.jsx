@@ -50,9 +50,8 @@ function BuyForm(props) {
       item: {
         name: props.name,
         price: props.price,
-        description: props.description,
+        description: props.path,
         email: formik.values.email,
-        itemId: props.path,
       },
     });
     
