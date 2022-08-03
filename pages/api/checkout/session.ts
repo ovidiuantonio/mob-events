@@ -8,8 +8,6 @@ const stripe = new Stripe(process.env.PRIVATE_STRIPE_KEY, {
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { item } = req.body;
 
-  const redirectURL = "http://localhost:3000";
-
   const transformedItem = {
     price_data: {
       currency: "ron",
@@ -27,8 +25,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     line_items: [transformedItem],
     customer_email: item.email,
     mode: "payment",
-    success_url: redirectURL + "/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: redirectURL + "/fail?session_id={CHECKOUT_SESSION_ID}",
+    success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${req.headers.origin}/fail?session_id={CHECKOUT_SESSION_ID}`,
   });
 
   res.status(200).json({ id: session.id });
