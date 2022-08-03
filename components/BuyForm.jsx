@@ -53,8 +53,9 @@ function BuyForm(props) {
         description: props.description,
         metadata: {
           event: props.path,
-          customer_name: formik.values.firstName,
+          customer_name: `${formik.values.firstName} - ${formik.values.lastName}`,
           customer_email: formik.values.email,
+          customer_tel: formik.values.tel,
         }
       },
     });
@@ -135,6 +136,7 @@ function BuyForm(props) {
         <button type="submit" className="form-submit" id="submit">
           {loading ? "Processing..." : "Reserve"}
         </button>
+        <p className="form-error">Tables available: {props.spots}</p>
       </form>
     </div>
   );

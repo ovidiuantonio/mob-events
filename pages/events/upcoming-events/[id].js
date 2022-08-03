@@ -11,7 +11,10 @@ const Event = () => {
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
 
   const [events, setEvents] = useState([]);
+  const [tables, setTables] = useState();
+  const [spots, setSpots] = useState();
   const eventsCollectionRef = collection(db, `${eventType}`);
+  const tablesCollectionRef = collection(db, `tables-${eventId}`);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -20,6 +23,26 @@ const Event = () => {
     };
 
     getEvents();
+
+    const getTables = async () => {
+      const list = await getDocs(tablesCollectionRef);
+      setTables(list.docs.length - 1);
+
+      const list2 = list.docs.map((event) => ({
+        ...event.data(),
+        id: event.id,
+      }));
+
+      const numberOfSpots = list2.map((item) => {
+        if (item.id === "number") {
+          return item.number;
+        }
+      });
+
+      setSpots(numberOfSpots[0]);
+    };
+
+    getTables();
 
     function includeJs(jsFilePath) {
       var js = document.createElement("script");
@@ -77,6 +100,7 @@ const Event = () => {
                   description={description}
                   path={path}
                   index={i}
+                  spots={spots - tables}
                 />
               );
             else buyComp = <></>;

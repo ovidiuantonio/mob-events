@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import axios from "axios";
-import { useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
+import Confetti from "react-confetti";
 
 function Success() {
   const query = useRouter().query;
@@ -14,12 +15,16 @@ function Success() {
     (url) => fetch(url).then((res) => res.json())
   );
 
-  console.log(JSON.stringify(data, null, 2));
-
   return (
     <div className="sponsorships">
       <h1 className="categoryTitle">Payment Success</h1>
-      <p>{data ? JSON.stringify(data, null, 2) : "Loading"}</p>
+      <Confetti
+        width={3000}
+        height={3000}
+        recycle={false}
+        numberOfPieces={1000}
+        initialVelocityY={5}
+      />
     </div>
   );
 }

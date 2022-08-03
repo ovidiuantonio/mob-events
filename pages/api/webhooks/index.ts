@@ -43,6 +43,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("success", event.id);
 
     if (event.type === "payment_intent.succeeded") {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
       //   const collectionRef = collection(db, "upcoming-events");
       //   const getTables = async () => {
       //     const list = await getDocs(collectionRef);
@@ -87,11 +88,13 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const eventId = paymentIntent.metadata.event;
     const email = paymentIntent.metadata.customer_email;
     const name = paymentIntent.metadata.customer_name;
+    const tel = paymentIntent.metadata.customer_tel;
     const id = paymentIntent.id;
 
     await setDoc(doc(db, `tables-${eventId}`, `${id}`), {
       name: name,
       email: email,
+      tel: tel,
     });
 
     res.json({ received: true, event: event.data.object });

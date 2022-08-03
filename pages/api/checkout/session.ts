@@ -30,6 +30,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       event: `${item.metadata.event}`,
       customer_name: `${item.metadata.customer_name}`,
       customer_email: `${item.metadata.customer_email}`,
+      customer_tel: `${item.metadata.customer_tel}`,
     },
   });
 
