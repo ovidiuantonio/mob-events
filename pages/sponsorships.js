@@ -31,54 +31,57 @@ export default function Sponsorships() {
 
   return (
     <div>
-      <div className='sponsorships'>
-        <h1 className='categoryTitle'>MOB SPONSORSHIP</h1>
-        <div className='chapters'>
+      <div className="sponsorships">
+        <h1 className="categoryTitle">MOB SPONSORSHIP</h1>
+        <div className="chapters">
           {chapters.map((chapter, i) => (
-            <div className='chapter' key={i}>
-              <div className='chapter-top'>
-                <button
-                  className='chapter-btn'
-                  onClick={() =>
-                    setChapters(
-                      chapters.map((chapter, index) => {
-                        if (index === i) {
-                          chapter.open = !chapter.open;
-                        } else {
-                          chapter.open = false;
-                        }
+            <div className="chapter" key={i}>
+              <div className="chapter-top">
+                <h2 className="chapter-title">
+                  {" "}
+                  <button
+                    className="chapter-btn"
+                    onClick={() =>
+                      setChapters(
+                        chapters.map((chapter, index) => {
+                          if (index === i) {
+                            chapter.open = !chapter.open;
+                          } else {
+                            chapter.open = false;
+                          }
 
-                        return chapter;
-                      })
-                    )
-                  }
-                  index={i}
-                >
-                  <ImArrowDown
-                    className={chapter.open ? "arrow-up" : "arrow-down"}
-                  />
-                </button>
-                <h2 className='chapter-title'>{chapter.title}</h2>
+                          return chapter;
+                        })
+                      )
+                    }
+                    index={i}
+                  >
+                    <ImArrowDown
+                      className={chapter.open ? "arrow-up" : "arrow-down"}
+                    />
+                  </button>
+                  {chapter.title}
+                </h2>
               </div>
               <div
                 className={
                   "chapter-bottom" + (chapter.open ? "chapter-bottom-open" : "")
                 }
               >
-                <p className='chapter-text'>{chapter.answer}</p>
+                <p className="chapter-text">{chapter.answer}</p>
               </div>
             </div>
           ))}
         </div>
-        <div className='cta-holder'>
-          <div className='cta-holder-seemore'>
-            <h2 className='seeall-text seeall-text-sponsor'>
+        <div className="cta-holder">
+          <div className="cta-holder-seemore">
+            <h2 className="seeall-text seeall-text-sponsor">
               Vrei mai multe detalii?
             </h2>
           </div>
-          <div className='cta-holder-buynow'>
-            <h1 className='buynow-text buynow-text-email'>
-              <a className='buynow-link' onClick={emailWindow}>
+          <div className="cta-holder-buynow">
+            <h1 className="buynow-text buynow-text-email">
+              <a className="buynow-link" onClick={emailWindow}>
                 Scrie-ne un email!
               </a>
             </h1>

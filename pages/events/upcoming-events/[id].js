@@ -5,22 +5,63 @@ import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
 
-const Event = () => {
+export async function getStaticPaths({ params }) {
+  //get events
+  const eventsCollectionRef = collection(db, `upcoming-events`);
+  const listEvents = await getDocs(eventsCollectionRef);
+  const events = listEvents.docs.map((event) => ({
+    ...event.data(),
+    id: event.id,
+  }));
+  const paths = events.map((ev, i) => ({
+    params: {
+      id: ev.path,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  //get events
+  const eventsCollectionRef = collection(db, `upcoming-events`);
+  const listEvents = await getDocs(eventsCollectionRef);
+  const events = listEvents.docs.map((event) => ({
+    ...event.data(),
+    id: event.id,
+  }));
+  const eventsJSON = JSON.parse(JSON.stringify(events));
+
+  return {
+    props: {
+      events: eventsJSON,
+    },
+    revalidate: 1,
+  };
+}
+
+const EventUpcoming = ({ events }) => {
   const router = useRouter();
   const eventId = router.query.id;
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
-
-  const [events, setEvents] = useState([]);
-
-  const eventsCollectionRef = collection(db, `${eventType}`);
+  const [tables, setTables] = useState();
 
   useEffect(() => {
-    const getEvents = async () => {
-      const list = await getDocs(eventsCollectionRef);
-      setEvents(list.docs.map((event) => ({ ...event.data(), id: event.id })));
+    //get tables
+    const getTables = async () => {
+      const tablesCollectionRef = collection(db, `tables-${eventId}`);
+      const list = await getDocs(tablesCollectionRef);
+      const tables = list.docs.map((event) => ({
+        ...event.data(),
+        id: event.id,
+      }));
+      setTables(JSON.parse(JSON.stringify(tables)).length);
     };
 
-    getEvents();
+    getTables();
 
     function includeJs(jsFilePath) {
       var js = document.createElement("script");
@@ -54,7 +95,7 @@ const Event = () => {
 
   return (
     <div className="eventPage">
-      {events.map((ev, i) => {
+      {events?.map((ev, i) => {
         if (ev.path === eventId) {
           let location = ev.location,
             city = ev.city,
@@ -78,7 +119,7 @@ const Event = () => {
                   description={description}
                   path={path}
                   index={i}
-                  spots={ev.spots}
+                  spotsLeft={ev.spots - tables}
                   eventId={eventId}
                 />
               );
@@ -148,4 +189,4 @@ const Event = () => {
   );
 };
 
-export default Event;
+export default EventUpcoming;

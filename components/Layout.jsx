@@ -3,12 +3,13 @@ import Nav from "./Nav";
 
 function Layout({ children }) {
   return (
-    <div className='site'>
+    <div className="site">
       <Nav />
       <div className='main'>
         {children}
         <Footer />
       </div>
+
     </div>
   );
 }

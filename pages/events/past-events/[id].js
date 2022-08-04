@@ -6,69 +6,95 @@ import BuyForm from "../../../components/BuyForm";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-const Event = () => {
+export async function getStaticPaths({ params }) {
+  //get events
+  const eventsCollectionRef = collection(db, `past-events`);
+  const listEvents = await getDocs(eventsCollectionRef);
+  const events = listEvents.docs.map((event) => ({
+    ...event.data(),
+    id: event.id,
+  }));
+  const paths = events.map((ev, i) => ({
+    params: {
+      id: ev.path,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  //get events
+  const eventsCollectionRef = collection(db, `past-events`);
+  const listEvents = await getDocs(eventsCollectionRef);
+  const events = listEvents.docs.map((event) => ({
+    ...event.data(),
+    id: event.id,
+  }));
+  const eventsJSON = JSON.parse(JSON.stringify(events));
+
+  return {
+    props: {
+      events: eventsJSON,
+    },
+    revalidate: 1,
+  };
+}
+
+const EventPast = ({ events }) => {
   const router = useRouter();
   const eventId = router.query.id;
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
 
-  const [events, setEvents] = useState([]);
-  const eventsCollectionRef = collection(db, `${eventType}`);
-
-  useEffect(() => {
-    const getEvents = async () => {
-      const list = await getDocs(eventsCollectionRef);
-      setEvents(list.docs.map((event) => ({ ...event.data(), id: event.id })));
-    };
-
-    getEvents();
-  }, []);
-
   return (
-    <div className='eventPage'>
+    <div className="eventPage">
       {events.map((ev, i) => {
         if (ev.path === eventId)
           return (
             <div>
-              <div key={ev.path} className='event-main'>
-                <h1 className='categoryTitle categoryTitle-nomargin'>
+              <div key={ev.path} className="event-main">
+                <h1 className="categoryTitle categoryTitle-nomargin">
                   {ev.location}
                 </h1>
-                <h1 className='categoryTitle-sub'>{ev.city}</h1>
-                <div className='event-flex'>
+                <h1 className="categoryTitle-sub">{ev.city}</h1>
+                <div className="event-flex">
                   <img
                     src={
                       "https://drive.google.com/uc?export=view&id=" + ev.poster
                     }
-                    className='event-poster event-left'
+                    className="event-poster event-left"
                   />
-                  <div className='event-right'>
-                    <div className='event-right-text'>
-                      <h3 className='event-title event-title-gold-small'>
-                        <span className='event-title'>ARTIST - </span>{" "}
+                  <div className="event-right">
+                    <div className="event-right-text">
+                      <h3 className="event-title event-title-gold-small">
+                        <span className="event-title">ARTIST - </span>{" "}
                         {ev.artist} {ev.featartist}
                       </h3>
-                      <h3 className='event-title event-title-gold-small'>
-                        <span className='event-title'>LOCATION - </span>{" "}
+                      <h3 className="event-title event-title-gold-small">
+                        <span className="event-title">LOCATION - </span>{" "}
                         {ev.location} {ev.city}
                       </h3>
-                      <h3 className='event-title event-title-gold-small'>
-                        <span className='event-title'>DATE - </span> {ev.date}
+                      <h3 className="event-title event-title-gold-small">
+                        <span className="event-title">DATE - </span> {ev.date}
                       </h3>
-                      <h3 className='event-title event-title-gold-small'>
-                        <span className='event-title'>OPEN GATES - </span>{" "}
+                      <h3 className="event-title event-title-gold-small">
+                        <span className="event-title">OPEN GATES - </span>{" "}
                         {ev.time}
                       </h3>
-                      <h3 className='event-title event-title-gold-small'>
-                        <span className='event-title'>DESCRIPTION - </span>{" "}
+                      <h3 className="event-title event-title-gold-small">
+                        <span className="event-title">DESCRIPTION - </span>{" "}
                         {ev.desc}
                       </h3>
                     </div>
                   </div>
                 </div>
-                <h1 className='categoryTitle-sub categoryTitle-sub-white'>
+                <h1 className="categoryTitle-sub categoryTitle-sub-white">
                   PHOTO GALLERY
                 </h1>
-                <div className='slider-container'>
+                <div className="slider-container">
                   <Splide
                     options={{
                       perPage: 3,
@@ -80,17 +106,17 @@ const Event = () => {
                       autoHeight: true,
                       autoWidth: true,
                     }}
-                    className='slider'
+                    className="slider"
                   >
                     {ev.photos.map((photo, i) => {
                       return (
-                        <SplideSlide key={i} className='slider-slide'>
+                        <SplideSlide key={i} className="slider-slide">
                           <img
                             src={
                               "https://drive.google.com/uc?export=view&id=" +
                               photo
                             }
-                            className='slider-photo'
+                            className="slider-photo"
                           />
                         </SplideSlide>
                       );
@@ -105,4 +131,4 @@ const Event = () => {
   );
 };
 
-export default Event;
+export default EventPast;

@@ -3,25 +3,33 @@ import Script from "next/script";
 
 export default function Document() {
   return (
-    <Html lang='en'>
+    <Html lang="en">
       <Head>
-        <html lang='en'>
+        <html lang="en">
           <head>
-            <meta charset='utf-8' />
-            <link rel='icon' href='/logo-mob-png.png' />
+            <meta charset="utf-8" />
+            <link rel="icon" href="/logo-mob-png.png" />
             <meta
-              name='viewport'
-              content='width=device-width, initial-scale=1'
+              name="viewport"
+              content="width=device-width, initial-scale=1"
             />
-            <meta name='theme-color' content='#000000' />
-            <meta name='description' content='Mob Events' />
+
+            <meta name="theme-color" content="#000000" />
+            <meta name="description" content="Mob Events" />
+            <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"
+              integrity="sha512-bUg5gaqBVaXIJNuebamJ6uex//mjxPk8kljQTdM1SwkNrQD7pjS+PerntUSD+QRWPNJ0tq54/x4zRV8bLrLhZg=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"
+            ></script>
+            <script src="nprogress.js"></script>
 
             <title>Mob Events</title>
           </head>
         </html>
       </Head>
       <body>
-        <Script src='/liveTickets.js' />
+        <Script src="/liveTickets.js" />
         <Main />
         <NextScript />
       </body>

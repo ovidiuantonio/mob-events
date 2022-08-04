@@ -8,19 +8,7 @@ import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 
 function BuyForm(props) {
   const [loading, setLoading] = useState(false);
-  const [tables, setTables] = useState([]);
-  const tablesCollectionRef = collection(db, `tables-${props.eventId}`);
-
-  useEffect(() => {
-    const getTables = async () => {
-      const list = await getDocs(tablesCollectionRef);
-      setTables(list.docs.map((event) => ({ ...event.data(), id: event.id })));
-    };
-
-    getTables();
-  }, [])
   
-
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -58,7 +46,7 @@ function BuyForm(props) {
 
   const createCheckOutSession = async () => {
     setLoading(true);
-    if (props.spots - tables.length) {
+    if (props.spotsLeft) {
       const stripe = await stripePromise;
       const checkoutSession = await axios.post("/api/checkout/session", {
         item: {
@@ -153,7 +141,7 @@ function BuyForm(props) {
           {loading ? "Processing..." : "Reserve"}
         </button>
         <p className="form-error form-error-tables">
-          Tables available: {props.spots - tables.length}
+          Tables available: {props.spotsLeft}
         </p>
       </form>
     </div>

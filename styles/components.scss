@@ -16,13 +16,54 @@ $white: #ffffff;
   left: 0;
   float: left;
   position: sticky;
+  z-index: 10000;
+
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
+
+  &-bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &-burger {
+    width: 6.9rem;
+    height: 6.9rem;
+    display: none;
+    cursor: pointer;
+  }
+
+  &-close {
+    width: 6.9rem;
+    height: 6.9rem;
+    display: none;
+    cursor: pointer;
+  }
+}
+
+.copyright {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $bg;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+  width: 100%;
 }
 
 .Logo {
   max-width: 6.9rem;
   min-width: 6.9rem;
   height: auto;
-  margin-bottom: 3rem;
   fill: $bg;
 
   transition: all 0.2s ease-in;
@@ -72,14 +113,6 @@ $white: #ffffff;
   }
 
   transition: all 0.3s ease-in-out;
-}
-
-.copyright {
-  font-size: 1rem;
-  font-weight: 600;
-  color: $bg;
-  position: absolute;
-  bottom: 1rem;
 }
 
 // EVENTS
@@ -292,6 +325,7 @@ $white: #ffffff;
 .cta-holder {
   display: flex;
   flex-direction: column;
+  margin-bottom: 4rem;
 }
 
 .pastEvents {
@@ -362,6 +396,7 @@ $white: #ffffff;
 
   &-section {
     min-height: 15rem;
+    margin-bottom: 4rem;
   }
 
   &-mob {
@@ -653,5 +688,258 @@ $white: #ffffff;
 
   & svg {
     fill: $white !important;
+  }
+}
+
+// MEDIA QUERIES
+
+@media screen and (max-width: 1500px) {
+  .event {
+    &-poster {
+      margin-right: 0;
+    }
+
+    &-flex {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-right {
+      margin-top: 4rem;
+      text-align: center;
+      align-items: center;
+
+      &-button {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  html {
+    font-size: 8px;
+  }
+
+  .chapter {
+    &-top {
+      justify-content: right;
+    }
+
+    &-title {
+      display: inline;
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .main {
+    margin-left: 0;
+  }
+
+  .upcomingEvents,
+  .pastEvents,
+  .sponsorships,
+  .eventPage {
+    width: 100%;
+    padding: 6rem;
+    padding-top: 10rem;
+  }
+
+  html {
+    font-size: 8px;
+  }
+
+  body,
+  .pastEvents,
+  .home-buynow-container {
+    background-size: 200%;
+  }
+
+  .categoryTitle {
+    font-size: 10rem;
+  }
+
+  .form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .upcomingEvents,
+  .pastEvents,
+  .sponsorships {
+    text-align: center;
+  }
+
+  .home-buynow-title-link {
+    font-size: 5.5rem;
+  }
+
+  .sponsorships,
+  .chapter {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .event {
+    &-holder {
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-star {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .form {
+    &-numeprenume {
+      flex-direction: column;
+    }
+
+    &-prenume {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .navBar {
+    width: 100vw;
+    height: 15rem;
+    float: none;
+    padding-top: 5rem;
+
+    &-top {
+      justify-content: space-between;
+      width: 90%;
+    }
+
+    &-bottom {
+      max-height: 0;
+      display: none;
+      pointer-events: none;
+    }
+
+    &-burger,
+    &-close {
+      display: block;
+    }
+  }
+
+  .buynow-text {
+    padding: 2rem 2rem;
+  }
+
+  .seeall-text {
+    padding: 0.5rem 2rem;
+  }
+
+  .chapter {
+    &-title {
+      line-height: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-buynow {
+    &-container {
+      padding: 7rem 3rem;
+    }
+
+    &-title {
+      font-size: 3.5rem;
+
+      &-link {
+        line-height: 100%;
+      }
+    }
+  }
+
+  .chapter {
+    &-title {
+      font-size: 3.5rem;
+    }
+  }
+
+  .slider {
+    &-photo {
+      height: 60rem;
+      width: auto;
+    }
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    &-section {
+      align-items: center;
+    }
+  }
+
+  .navBar {
+    height: 12rem;
+    padding-top: 3rem;
+  }
+
+  body,
+  .pastEvents,
+  .home-buynow-container {
+    background-size: 400%;
+  }
+
+  .categoryTitle {
+    font-size: 8rem;
+
+    &-nomargin {
+      font-size: 8rem;
+    }
+  }
+
+  .buynow-text,
+  .home-buynow-title {
+    line-height: 100%;
+  }
+
+  .upcomingEvents,
+  .pastEvents {
+    padding: 4rem;
+    padding-top: 10rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .event-poster {
+    width: 40rem;
+  }
+
+  .slider {
+    &-photo {
+      height: 40rem;
+      width: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 1px) {
+  .navBar {
+    &-open {
+      height: 100vh;
+    }
+
+    &-bottom {
+      &-open {
+        margin-top: 3rem;
+        max-height: 100%;
+        display: block;
+        pointer-events: all;
+      }
+    }
   }
 }
