@@ -66,6 +66,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         name: name,
         email: email,
         tel: tel,
+        date: new Date(),
       });
     }
 
