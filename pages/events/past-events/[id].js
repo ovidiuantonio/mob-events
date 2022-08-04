@@ -6,7 +6,7 @@ import BuyForm from "../../../components/BuyForm";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   //get events
   const eventsCollectionRef = collection(db, `past-events`);
   const listEvents = await getDocs(eventsCollectionRef);
