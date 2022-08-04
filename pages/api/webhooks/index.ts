@@ -54,7 +54,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     //   console.log(event.type);
     // }
 
-    if (event.type === "checkout.session.completed") {
+    if (event.type === "payment_intent.succeeded") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       const eventId = paymentIntent.metadata.event;
       const email = paymentIntent.metadata.customer_email;
