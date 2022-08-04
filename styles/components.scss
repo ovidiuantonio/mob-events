@@ -915,6 +915,14 @@ $white: #ffffff;
 }
 
 @media screen and (max-width: 400px) {
+  .categoryTitle {
+    font-size: 6rem;
+
+    &-nomargin {
+      font-size: 6rem;
+    }
+  }
+
   .event-poster {
     width: 40rem;
   }
