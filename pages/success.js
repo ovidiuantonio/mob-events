@@ -17,10 +17,10 @@ function Success() {
 
   return (
     <div className="sponsorships">
-      <h1 className="categoryTitle">Payment Success</h1>
+      <h1 className="categoryTitle">Payment Succeeded</h1>
       <Confetti
         width={3000}
-        height={3000}
+        height={1000}
         recycle={false}
         numberOfPieces={1000}
         initialVelocityY={5}

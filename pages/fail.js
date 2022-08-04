@@ -15,7 +15,7 @@ function Fail() {
 
   return (
     <div className="sponsorships">
-      <h1 className="categoryTitle">Payment Fail</h1>
+      <h1 className="categoryTitle">Payment Failed</h1>
     </div>
   );
 }
