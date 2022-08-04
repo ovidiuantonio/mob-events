@@ -5,27 +5,7 @@ import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
 
-export async function getStaticPaths({ params }) {
-  //get events
-  const eventsCollectionRef = collection(db, `upcoming-events`);
-  const listEvents = await getDocs(eventsCollectionRef);
-  const events = listEvents.docs.map((event) => ({
-    ...event.data(),
-    id: event.id,
-  }));
-  const paths = events.map((ev, i) => ({
-    params: {
-      id: ev.path,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   //get events
   const eventsCollectionRef = collection(db, `upcoming-events`);
   const listEvents = await getDocs(eventsCollectionRef);
@@ -35,34 +15,28 @@ export async function getStaticProps({ params }) {
   }));
   const eventsJSON = JSON.parse(JSON.stringify(events));
 
+  const tablesCollectionRef = collection(db, `tables-${params.id}`);
+  const list = await getDocs(tablesCollectionRef);
+  const tables = list.docs.map((event) => ({
+    ...event.data(),
+    id: event.id,
+  }));
+  const tablesJSON = JSON.parse(JSON.stringify(tables)).length;
+
   return {
     props: {
       events: eventsJSON,
+      tables: tablesJSON,
     },
-    revalidate: 1,
   };
 }
 
-const EventUpcoming = ({ events }) => {
+const EventUpcoming = ({ events, tables }) => {
   const router = useRouter();
   const eventId = router.query.id;
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
-  const [tables, setTables] = useState();
 
   useEffect(() => {
-    //get tables
-    const getTables = async () => {
-      const tablesCollectionRef = collection(db, `tables-${eventId}`);
-      const list = await getDocs(tablesCollectionRef);
-      const tables = list.docs.map((event) => ({
-        ...event.data(),
-        id: event.id,
-      }));
-      setTables(JSON.parse(JSON.stringify(tables)).length);
-    };
-
-    getTables();
-
     function includeJs(jsFilePath) {
       var js = document.createElement("script");
 

@@ -6,26 +6,6 @@ import BuyForm from "../../../components/BuyForm";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
-export async function getStaticPaths({ params }) {
-  //get events
-  const eventsCollectionRef = collection(db, `past-events`);
-  const listEvents = await getDocs(eventsCollectionRef);
-  const events = listEvents.docs.map((event) => ({
-    ...event.data(),
-    id: event.id,
-  }));
-  const paths = events.map((ev, i) => ({
-    params: {
-      id: ev.path,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
 export async function getStaticProps({ params }) {
   //get events
   const eventsCollectionRef = collection(db, `past-events`);
@@ -40,7 +20,6 @@ export async function getStaticProps({ params }) {
     props: {
       events: eventsJSON,
     },
-    revalidate: 1,
   };
 }
 
