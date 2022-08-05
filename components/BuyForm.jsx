@@ -8,7 +8,8 @@ import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 
 function BuyForm(props) {
   const [loading, setLoading] = useState(false);
-  
+  const [tables, setTables] = useState(props.tables);
+
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -46,7 +47,8 @@ function BuyForm(props) {
 
   const createCheckOutSession = async () => {
     setLoading(true);
-    if (props.spotsLeft) {
+
+    if (props.spots - props.tables) {
       const stripe = await stripePromise;
       const checkoutSession = await axios.post("/api/checkout/session", {
         item: {
@@ -71,7 +73,7 @@ function BuyForm(props) {
       } else {
       }
     } else {
-      alert("There are no more tables left");
+      alert("There are no tables left");
     }
     setLoading(false);
   };
@@ -141,7 +143,7 @@ function BuyForm(props) {
           {loading ? "Processing..." : "Reserve"}
         </button>
         <p className="form-error form-error-tables">
-          Tables available: {props.spotsLeft}
+          Tables available: {props.spots - props.tables}
         </p>
       </form>
     </div>

@@ -80,7 +80,7 @@ const EventUpcoming = ({ events, tables }) => {
             time = ev.time,
             desc = ev.desc;
           let name = ev.location,
-            price = 100,
+            price = ev.tableprice,
             description = ev.desc,
             path = ev.path;
           let buyComp;
@@ -93,7 +93,8 @@ const EventUpcoming = ({ events, tables }) => {
                   description={description}
                   path={path}
                   index={i}
-                  spotsLeft={ev.spots - tables}
+                  spots={ev.spots}
+                  tables={tables}
                   eventId={eventId}
                 />
               );
