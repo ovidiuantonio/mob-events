@@ -153,8 +153,8 @@ const EventUpcoming = ({ events, tables }) => {
                   </div>
                 </div>
 
-                <h1 className="categoryTitle">Book your table</h1>
-                {buyComp}
+                {/* <h1 className="categoryTitle">Book your table</h1>
+                {buyComp} */}
               </div>
             </div>
           );
