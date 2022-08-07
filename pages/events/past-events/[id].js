@@ -5,6 +5,7 @@ import { collection, getDocs } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import Head from "next/head";
 
 export async function getServerSideProps({ params }) {
   //get events
@@ -34,6 +35,9 @@ const EventPast = ({ events }) => {
         if (ev.path === eventId)
           return (
             <div>
+              <Head>
+                <title>{ev.location}</title>
+              </Head>
               <div key={ev.path} className="event-main">
                 <h1 className="categoryTitle categoryTitle-nomargin">
                   {ev.location}
@@ -45,6 +49,7 @@ const EventPast = ({ events }) => {
                       "https://drive.google.com/uc?export=view&id=" + ev.poster
                     }
                     className="event-poster event-left"
+                    alt={ev.artist}
                   />
                   <div className="event-right">
                     <div className="event-right-text">
@@ -96,6 +101,7 @@ const EventPast = ({ events }) => {
                               photo
                             }
                             className="slider-photo"
+                            alt="event photo"
                           />
                         </SplideSlide>
                       );

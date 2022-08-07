@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { useEffect } from "react";
+import Head from "next/head";
 
 function Fail() {
   const query = useRouter().query;
@@ -15,6 +15,9 @@ function Fail() {
 
   return (
     <div className="sponsorships">
+      <Head>
+        <title>Fail</title>
+      </Head>
       <h1 className="categoryTitle">Payment Failed</h1>
     </div>
   );

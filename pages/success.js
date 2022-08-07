@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import axios from "axios";
-import { useRef, useState, useEffect } from "react";
 import Confetti from "react-confetti";
+import Head from "next/head";
 
 function Success() {
   const query = useRouter().query;
@@ -17,6 +16,9 @@ function Success() {
 
   return (
     <div className="sponsorships">
+      <Head>
+        <title>Success</title>
+      </Head>
       <h1 className="categoryTitle">Payment Succeeded</h1>
       <Confetti
         width={3000}

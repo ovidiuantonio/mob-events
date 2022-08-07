@@ -1,6 +1,7 @@
 import { ImArrowDown } from "react-icons/im";
 import { useState } from "react";
 import Buy from "../components/Buy";
+import Head from "next/head";
 
 export default function Sponsorships() {
   const [chapters, setChapters] = useState([
@@ -31,6 +32,9 @@ export default function Sponsorships() {
 
   return (
     <div>
+      <Head>
+        <title>Mob Sponsorship</title>
+      </Head>
       <div className="sponsorships">
         <h1 className="categoryTitle">MOB SPONSORSHIP</h1>
         <div className="chapters">

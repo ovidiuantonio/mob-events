@@ -4,8 +4,9 @@ import { db } from "../../../firebase";
 import { collection, getDocs, doc, setDoc } from "@firebase/firestore";
 import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
+import Head from "next/head";
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, res, req }) {
   //get events
   const eventsCollectionRef = collection(db, `upcoming-events`);
   const listEvents = await getDocs(eventsCollectionRef);
@@ -104,6 +105,9 @@ const EventUpcoming = ({ events, tables }) => {
 
           return (
             <div>
+              <Head>
+                <title>{ev.location}</title>
+              </Head>
               <div key={ev.path} className="event-main">
                 <h1 className="categoryTitle categoryTitle-nomargin">
                   {location}
@@ -113,6 +117,7 @@ const EventUpcoming = ({ events, tables }) => {
                   <img
                     src={"https://drive.google.com/uc?export=view&id=" + poster}
                     className="event-poster event-left"
+                    alt={artist}
                   />
                   <div className="event-right">
                     <div className="event-right-text">

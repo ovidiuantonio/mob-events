@@ -13,8 +13,8 @@ export default function Document() {
               name="viewport"
               content="width=device-width, initial-scale=1"
             />
-
-            <meta name="theme-color" content="#000000" />
+            <link rel="apple-touch-icon" href="/logo-mob-png.png"></link>
+            <meta name="theme-color" content="#feb700" />
             <meta name="description" content="Mob Events" />
             <script
               src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"

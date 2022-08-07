@@ -48,7 +48,7 @@ function Footer() {
       <div className='footer-section footer-contact'>
         <p className='footer-category-title'>CONTACT</p>
         <ul className='footer-list'>
-          <a onClick={emailWindow} className='footer-link footer-email'>
+          <a href={"mailto:mateii3321@gmail.com?subject=Info&body=Message"} className='footer-link footer-email'>
             mateii3321@gmail.com
           </a>
           <a href='tel://+40723123123' className='footer-link'>
