@@ -142,7 +142,7 @@ const EventUpcoming = ({ events, tables }) => {
                         className="button"
                         onClick={() => {
                           openSidebar(
-                            "bogdan-de-la-ploiesti",
+                            `${ev.livetickets}`,
                             "https://www.livetickets.ro"
                           );
                         }}
