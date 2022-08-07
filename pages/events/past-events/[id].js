@@ -8,7 +8,10 @@ import "@splidejs/react-splide/css";
 import Head from "next/head";
 
 export async function getServerSideProps({ params, res }) {
-  res.setHeader("Cache-Control", `s-maxage=300, stale-while-revalidate`);
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=300, stale-while-revalidate=59"
+  );
   //get events
   const eventsCollectionRef = collection(db, `past-events`);
   const listEvents = await getDocs(eventsCollectionRef);
