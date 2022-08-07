@@ -49,7 +49,7 @@ function Footer() {
         <p className='footer-category-title'>CONTACT</p>
         <ul className='footer-list'>
           <a onClick={emailWindow} className='footer-link footer-email'>
-            contact@mobevents.com
+            mateii3321@gmail.com
           </a>
           <a href='tel://+40723123123' className='footer-link'>
             0723123123
