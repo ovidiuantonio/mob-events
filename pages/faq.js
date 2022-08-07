@@ -26,7 +26,7 @@ export default function Faq() {
 
   const emailWindow = () => {
     window.location.href =
-      "mailto:contact@mobevents.com?subject=Your Question&body=Details";
+      "mailto:mateii3321@gmail.com?subject=Your Question&body=Details";
   };
 
   return (

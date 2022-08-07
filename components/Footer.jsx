@@ -5,7 +5,7 @@ import Link from "next/link";
 function Footer() {
   const emailWindow = () => {
     window.location.href =
-      "mailto:contact@mobevents.com?subject=Info&body=Message";
+      "mailto:mateii3321@gmail.com?subject=Info&body=Message";
   };
 
   return (

@@ -26,7 +26,7 @@ export default function Sponsorships() {
 
   const emailWindow = () => {
     window.location.href =
-      "mailto:contact@mobevents.com?subject=Detalii Mob Sponsorship&body=Message";
+      "mailto:mateii3321@gmail.com?subject=Detalii Mob Sponsorship&body=Message";
   };
 
   return (
