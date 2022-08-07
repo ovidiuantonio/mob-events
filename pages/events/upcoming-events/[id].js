@@ -6,7 +6,8 @@ import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
 import Head from "next/head";
 
-export async function getServerSideProps({ params, res, req }) {
+export async function getServerSideProps({ params, res }) {
+  res.setHeader("Cache-Control", `s-maxage=300, stale-while-revalidate`);
   //get events
   const eventsCollectionRef = collection(db, `upcoming-events`);
   const listEvents = await getDocs(eventsCollectionRef);
