@@ -6,42 +6,66 @@ import BuyForm from "../../../components/BuyForm";
 import { openSidebar } from "../../../liveTickets";
 import Head from "next/head";
 
-export async function getServerSideProps({ params, res }) {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=59"
-  );
-  //get events
-  const eventsCollectionRef = collection(db, `upcoming-events`);
-  const listEvents = await getDocs(eventsCollectionRef);
-  const events = listEvents.docs.map((event) => ({
-    ...event.data(),
-    id: event.id,
-  }));
-  const eventsJSON = JSON.parse(JSON.stringify(events));
+// export async function getServerSideProps({ params, res }) {
+//   res.setHeader(
+//     "Cache-Control",
+//     "public, s-maxage=300, stale-while-revalidate=59"
+//   );
+//   //get events
+//   const eventsCollectionRef = collection(db, `upcoming-events`);
+//   const listEvents = await getDocs(eventsCollectionRef);
+//   const events = listEvents.docs.map((event) => ({
+//     ...event.data(),
+//     id: event.id,
+//   }));
+//   const eventsJSON = JSON.parse(JSON.stringify(events));
 
-  const tablesCollectionRef = collection(db, `tables-${params.id}`);
-  const list = await getDocs(tablesCollectionRef);
-  const tables = list.docs.map((event) => ({
-    ...event.data(),
-    id: event.id,
-  }));
-  const tablesJSON = JSON.parse(JSON.stringify(tables)).length;
+//   const tablesCollectionRef = collection(db, `tables-${params.id}`);
+//   const list = await getDocs(tablesCollectionRef);
+//   const tables = list.docs.map((event) => ({
+//     ...event.data(),
+//     id: event.id,
+//   }));
+//   const tablesJSON = JSON.parse(JSON.stringify(tables)).length;
 
-  return {
-    props: {
-      events: eventsJSON,
-      tables: tablesJSON,
-    },
-  };
-}
+//   return {
+//     props: {
+//       events: eventsJSON,
+//       tables: tablesJSON,
+//     },
+//   };
+// }
 
-const EventUpcoming = ({ events, tables }) => {
+const EventUpcoming = () => {
   const router = useRouter();
   const eventId = router.query.id;
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
+  const [events, setEvents] = useState([]);
+  const [tables, setTables] = useState();
 
   useEffect(() => {
+    const getEvents = async () => {
+      const listEvents = await getDocs(collection(db, `upcoming-events`));
+      const eventsList = listEvents.docs.map((event) => ({
+        ...event.data(),
+        id: event.id,
+      }));
+      setEvents(JSON.parse(JSON.stringify(eventsList)));
+    };
+
+    getEvents();
+
+    const getTables = async () => {
+      const list = await getDocs(collection(db, `tables-${eventId}`));
+      const tablesList = list.docs.map((event) => ({
+        ...event.data(),
+        id: event.id,
+      }));
+      setTables(JSON.parse(JSON.stringify(tablesList)).length);
+    };
+
+    getTables();
+
     function includeJs(jsFilePath) {
       var js = document.createElement("script");
 

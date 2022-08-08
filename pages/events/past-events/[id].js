@@ -7,31 +7,46 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import Head from "next/head";
 
-export async function getServerSideProps({ params, res }) {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=59"
-  );
-  //get events
-  const eventsCollectionRef = collection(db, `past-events`);
-  const listEvents = await getDocs(eventsCollectionRef);
-  const events = listEvents.docs.map((event) => ({
-    ...event.data(),
-    id: event.id,
-  }));
-  const eventsJSON = JSON.parse(JSON.stringify(events));
+// export async function getServerSideProps({ params, res }) {
+//   res.setHeader(
+//     "Cache-Control",
+//     "public, s-maxage=300, stale-while-revalidate=59"
+//   );
+//   //get events
+//   const eventsCollectionRef = collection(db, `past-events`);
+//   const listEvents = await getDocs(eventsCollectionRef);
+//   const events = listEvents.docs.map((event) => ({
+//     ...event.data(),
+//     id: event.id,
+//   }));
+//   const eventsJSON = JSON.parse(JSON.stringify(events));
 
-  return {
-    props: {
-      events: eventsJSON,
-    },
-  };
-}
+//   return {
+//     props: {
+//       events: eventsJSON,
+//     },
+//   };
+// }
 
-const EventPast = ({ events }) => {
+const EventPast = () => {
   const router = useRouter();
   const eventId = router.query.id;
   const eventType = router.pathname.slice(8, router.pathname.length - 5);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const eventsCollectionRef = collection(db, `past-events`);
+      const listEvents = await getDocs(eventsCollectionRef);
+      const eventsList = listEvents.docs.map((event) => ({
+        ...event.data(),
+        id: event.id,
+      }));
+      setEvents(eventsList);
+    };
+
+    getEvents();
+  }, []);
 
   return (
     <div className="eventPage">
