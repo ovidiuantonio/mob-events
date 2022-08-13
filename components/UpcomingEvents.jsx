@@ -33,32 +33,37 @@ function UpcomingEvents({ home }) {
     <div>
       <h1 className="categoryTitle">Upcoming Events</h1>
       <div className="events">
-        {upcoming.slice(0, limit).map((ev, i) => {
-          return (
-            <div className="event-holder" key={ev.id}>
-              <div className="event-content">
-                <h3 className="event-title event-title-gold">
-                  {ev.location}{" "}
-                  <span className="event-title">
-                    - {ev.date}, {ev.time}
-                  </span>{" "}
-                </h3>
-                <h3 className="event-title event-title-gold">
-                  {ev.artist} {ev.featartist}
-                </h3>
-                <a
-                  className="event-seemore"
-                  href={"/events/upcoming-events/" + ev.path}
-                >
-                  see more...
-                </a>
+        {!upcoming.length ?
+          <h2 className="categoryTitle-sub">
+            THERE ARE NO UPCOMING EVENTS AT THE MOMENT
+          </h2>
+          :
+          upcoming.slice(0, limit).map((ev, i) => {
+            return (
+              <div className="event-holder" key={ev.id}>
+                <div className="event-content">
+                  <h3 className="event-title event-title-gold">
+                    {ev.location}{" "}
+                    <span className="event-title">
+                      - {ev.date}, {ev.time}
+                    </span>{" "}
+                  </h3>
+                  <h3 className="event-title event-title-gold">
+                    {ev.artist} {ev.featartist}
+                  </h3>
+                  <a
+                    className="event-seemore"
+                    href={"/events/upcoming-events/" + ev.path}
+                  >
+                    see more...
+                  </a>
+                </div>
+                <div className="event-star">
+                  <IoStarSharp className="event-star" />
+                </div>
               </div>
-              <div className="event-star">
-                <IoStarSharp className="event-star" />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );
